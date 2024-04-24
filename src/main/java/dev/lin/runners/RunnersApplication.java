@@ -2,6 +2,7 @@ package dev.lin.runners;
 
 import java.time.LocalDateTime;
 
+import dev.lin.runners.run.Location;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -20,8 +21,14 @@ public class RunnersApplication {
 		ConfigurableApplicationContext context = SpringApplication.run(RunnersApplication.class, args);
 		WelcomeMessage welcomeMessage = (WelcomeMessage) context.getBean("welcomeMessage");
 		System.out.print(welcomeMessage.getWelcomeMessage());
-		log.info("Successful startup!!!!!!");
+		log.info("Successful startup");
 	}
-	
+	@Bean
+	CommandLineRunner runner(){
+		return args -> {
+			Run run = new Run(1, "First Run",LocalDateTime.now(),LocalDateTime.now(), 5, Location.OUTDOOR );
+			log.info("Run" + run);
+		};
+	}
 
 }
