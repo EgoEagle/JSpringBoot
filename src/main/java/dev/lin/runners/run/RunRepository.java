@@ -7,12 +7,18 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 
 @Repository
 public class RunRepository {
     private List<Run> runs = new ArrayList<>();
+
     List<Run> findAll(){
         return runs;
+    }
+
+    void create(Run run){
+        runs.add(run);
     }
 
     @PostConstruct
@@ -31,5 +37,22 @@ public class RunRepository {
                 LocalDateTime.now().plus(60, ChronoUnit.MINUTES),
                 8,
                 Location.INDOOR));
+    }
+
+    Optional<Run> findById(Integer id){
+        return runs.stream()
+                .filter(run -> run.id() == id)
+                .findFirst();
+    }
+
+    void update(Run run,Integer id){
+        Optional<Run> existingRun = findById(id);
+        if(existingRun.isPresent()){
+            runs.set(indexOf(existingRun.get()),run)
+        }
+    }
+
+    void delete(Integer id){
+        runs.removeIf(run -> run.id().equals(id));
     }
 }
