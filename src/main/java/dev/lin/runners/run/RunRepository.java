@@ -48,7 +48,7 @@ public class RunRepository {
     void update(Run run,Integer id){
         Optional<Run> existingRun = findById(id);
         if(existingRun.isPresent()){
-            runs.set(indexOf(existingRun.get()),run)
+            runs.set(runs.indexOf(existingRun.get()),run);
         }
     }
 

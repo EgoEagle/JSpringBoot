@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -31,7 +32,7 @@ public class RunController {
 
         Optional<Run> run = runRepository.findById(id);
         if(run.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new RunNotFoundException();
         }
         return run.get();
     }
@@ -40,7 +41,7 @@ public class RunController {
     //post
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    void create(@RequestBody Run run){
+    void create(@Valid @RequestBody Run run){
 
         runRepository.create(run);
     }
@@ -54,7 +55,7 @@ public class RunController {
     }
     //delete
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     void delete(@PathVariable Integer id){
         runRepository.delete(id);
     }
