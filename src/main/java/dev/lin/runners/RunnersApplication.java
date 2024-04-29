@@ -23,12 +23,6 @@ public class RunnersApplication {
 		System.out.print(welcomeMessage.getWelcomeMessage());
 		log.info("Successful startup");
 	}
-	@Bean
-	CommandLineRunner runner(){
-		return args -> {
-			Run run = new Run(1, "First Run",LocalDateTime.now(),LocalDateTime.now(), 5, Location.OUTDOOR );
-			log.info("Run" + run);
-		};
-	}
+
 
 }
